@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"gum/utils"
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -33,6 +35,12 @@ Available Commands:
 
 Use "gum [command] --help" for more information about a command.
 `,
+}
+
+func init() {
+	if err := utils.EnsureConfig(); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func Execute() {
