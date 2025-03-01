@@ -41,6 +41,10 @@ func init() {
 	if err := utils.EnsureConfig(); err != nil {
 		log.Fatal(err)
 	}
+
+	if err := utils.LoadProfiles(); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func Execute() {
