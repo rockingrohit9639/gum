@@ -30,3 +30,18 @@ func LoadProfiles() error {
 
 	return nil
 }
+
+func SaveProfiles() error {
+	profilesConfigPath := getProfileConfigPath()
+
+	data, err := json.MarshalIndent(Profiles, "", "    ")
+	if err != nil {
+		return err
+	}
+
+	if err := os.WriteFile(profilesConfigPath, data, 0644); err != nil {
+		return err
+	}
+
+	return nil
+}

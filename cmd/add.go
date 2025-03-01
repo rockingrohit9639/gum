@@ -69,7 +69,12 @@ var addCmd = &cobra.Command{
 
 		utils.Profiles[profileName] = newProfile
 
-		fmt.Println(utils.Profiles)
+		if err := utils.SaveProfiles(); err != nil {
+			fmt.Printf("Failed to save profile %v\n", err)
+			return
+		}
+
+		fmt.Printf("Successfully saved %s profile\n", profileName)
 	},
 }
 
