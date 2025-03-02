@@ -31,6 +31,9 @@ func LoadProfiles() error {
 	return nil
 }
 
+/*
+This function saves the &Profiles in profiles.json
+*/
 func SaveProfiles() error {
 	profilesConfigPath := getProfileConfigPath()
 
