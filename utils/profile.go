@@ -2,7 +2,9 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
+	"os/exec"
 )
 
 type Profile struct {
@@ -47,4 +49,31 @@ func SaveProfiles() error {
 	}
 
 	return nil
+}
+
+/*
+This function applies the given profile
+*/
+func ApplyProfile(profileName string) error {
+	profile, exists := Profiles[profileName]
+	if !exists {
+		return fmt.Errorf("profiles %s not found", profileName)
+	}
+
+	// set username from selected profile
+	execGitConfigCmd("user.name", profile.Name)
+
+	// set email from selected profile
+	execGitConfigCmd("user.email", profile.Email)
+
+	return nil
+}
+
+func execGitConfigCmd(key, value string) {
+	cmd := exec.Command("git", "config", "--global", key, value)
+	err := cmd.Run()
+	if err != nil {
+		fmt.Printf("Error setting Git config: %s -> %s\n", key, err)
+		return
+	}
 }

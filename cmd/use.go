@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"gum/utils"
-	"os/exec"
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -32,29 +31,14 @@ saved in your configuration file. It updates the global Git user settings
 			return
 		}
 
-		profile, exists := utils.Profiles[profileName]
-		if !exists {
-			fmt.Printf("Error: Profile '%s' not found.\n", profileName)
+		err = utils.ApplyProfile(profileName)
+		if err != nil {
+			fmt.Printf("%v\n", err)
 			return
 		}
 
-		// set username from selected profile
-		execGitConfigCmd("user.name", profile.Name)
-
-		// set email from selected profile
-		execGitConfigCmd("user.email", profile.Email)
-
-		fmt.Printf("Switched to profile '%s' (%s)\n", profileName, profile.Email)
+		fmt.Printf("Switched to profile '%s'\n", profileName)
 	},
-}
-
-func execGitConfigCmd(key, value string) {
-	cmd := exec.Command("git", "config", "--global", key, value)
-	err := cmd.Run()
-	if err != nil {
-		fmt.Printf("Error setting Git config: %s -> %s\n", key, err)
-	}
-
 }
 
 func init() {
