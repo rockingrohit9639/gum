@@ -21,6 +21,7 @@ This helps users quickly view available profiles and switch between them as need
 		}
 
 		for profileName, profile := range utils.Profiles {
+			fmt.Println("----------------------")
 			fmt.Printf("Profile: %s\n", profileName)
 			fmt.Printf("Email: %s\n", profile.Email)
 			fmt.Printf("Name: %s\n", profile.Name)
